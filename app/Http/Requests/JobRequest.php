@@ -3,9 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
-class CountryRequest extends FormRequest
+use Illuminate\Http\Exceptions\HttpResponseException;
+
+class JobRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,25 +23,28 @@ class CountryRequest extends FormRequest
      */
     public function rules(): array
     {
-        if($this->id){
+        if ($this->id) {
             return [
-                'country_code'=>'required|unique:countries,country_code,'.$this->id,
-                'name'=>'required|unique:countries,name,'.$this->id,
+                'job_title' => 'required',
+                'description' => 'required',
+                'application_instructions' => 'required',
             ];
-        }else{
+        } else {
             return [
-                'country_code'=>'required|unique:countries,country_code',
-                'name'=>'required|unique:countries,name',
+                'company_id' => 'required',
+                'job_title' => 'required',
+                'description' => 'required',
+                'application_instructions' => 'required',
             ];
         }
-
     }
 
-    public function failedValidation(Validator $validator){
+    public function failedValidation(Validator $validator)
+    {
         throw new HttpResponseException(response()->json([
-            'success'=>false,
-            'message'=> 'validation errors',
-            'errors'=>$validator->errors()
+            'success' => false,
+            'message' => 'validation errors',
+            'errors' => $validator->errors()
         ]));
     }
 }

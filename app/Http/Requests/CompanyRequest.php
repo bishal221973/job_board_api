@@ -3,9 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
-class CountryRequest extends FormRequest
+use Illuminate\Http\Exceptions\HttpResponseException;
+
+class CompanyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +25,17 @@ class CountryRequest extends FormRequest
     {
         if($this->id){
             return [
-                'country_code'=>'required|unique:countries,country_code,'.$this->id,
-                'name'=>'required|unique:countries,name,'.$this->id,
+                'municipality_id'=>'required',
+                'company_name'=>'required|unique:companies,company_name,'.$this->id,
+                'tole'=>'required'
             ];
         }else{
             return [
-                'country_code'=>'required|unique:countries,country_code',
-                'name'=>'required|unique:countries,name',
+                'municipality_id'=>'required',
+                'company_name'=>'required|unique:companies,company_name',
+                'tole'=>'required'
             ];
         }
-
     }
 
     public function failedValidation(Validator $validator){
