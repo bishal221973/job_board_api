@@ -41,7 +41,7 @@ class MunicipalityController extends Controller
             return response()->json([
                 'success'=>false,
                 'message'=>'municipality not found'
-            ]);
+            ],402);
         }
         $municipality->update($data);
         return response()->json([
@@ -56,7 +56,7 @@ class MunicipalityController extends Controller
             return response()->json([
                 'success'=>false,
                 'message'=>'municipality not found'
-            ]);
+            ],402);
         }
         $municipality->delete();
         return response()->json([

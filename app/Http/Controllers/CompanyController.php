@@ -28,7 +28,7 @@ class CompanyController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Already have a company'
-            ]);
+            ],402);
         }
         Company::create($data);
 
@@ -46,7 +46,7 @@ class CompanyController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Company not found'
-            ]);
+            ],402);
         }
         $company->update($request->validated());
 

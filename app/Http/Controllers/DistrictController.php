@@ -40,7 +40,7 @@ class DistrictController extends Controller
              return response()->json([
                  'success'=>false,
                  'message'=>'district not found'
-             ]);
+             ],402);
          }
          $district->update($data);
          return response()->json([
@@ -55,7 +55,7 @@ class DistrictController extends Controller
             return response()->json([
                 'success'=>false,
                 'message'=>'district not found'
-            ]);
+            ],402);
         }
         $district->delete();
         return response()->json([

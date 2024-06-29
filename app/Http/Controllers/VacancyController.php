@@ -23,6 +23,7 @@ class VacancyController extends Controller
         $data = $request->validated();
         $data['user_id'] = Auth::id();
         $data['company_id'] = Auth::user()->company->id;
+
         Vacancy::create($data);
 
         return response()->json([
@@ -39,7 +40,7 @@ class VacancyController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'vacancy not found'
-            ]);
+            ],402);
         }
         return response()->json([
             'success' => true,
@@ -55,7 +56,7 @@ class VacancyController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'vacancy not found'
-            ]);
+            ],402);
         }
         $vacancy->update($request->validated());
         return response()->json([
@@ -72,7 +73,7 @@ class VacancyController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'vacancy not found'
-            ]);
+            ],402);
         }
         $vacancy->delete();
         return response()->json([

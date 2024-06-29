@@ -16,7 +16,7 @@ class CompanyTest extends TestCase
      * A basic feature test example.
      */
 
-     use RefreshDatabase;
+    use RefreshDatabase;
     private $user;
 
     private $role;
@@ -29,7 +29,6 @@ class CompanyTest extends TestCase
         $this->role = Role::firstOrCreate(['name' => 'employer']);
 
         $this->user->assignRole($this->role);
-
     }
     public function test_get_company(): void
     {
@@ -40,10 +39,10 @@ class CompanyTest extends TestCase
 
     public function test_store_company(): void
     {
-        $response = $this->actingAs($this->user)->post('/api/company/store',[
-            'municipality_id'=>Municipality::factory()->create()->id,
-            'company_name'=>"Test Info web",
-            'tole'=>"Dhangadhi",
+        $response = $this->actingAs($this->user)->post('/api/company/store', [
+            'municipality_id' => Municipality::factory()->create()->id,
+            'company_name' => "Test Info web",
+            'tole' => "Dhangadhi",
         ]);
 
         $response->assertStatus(200);
@@ -51,11 +50,11 @@ class CompanyTest extends TestCase
 
     public function test_update_company(): void
     {
-        $company=Company::factory()->create();
-        $response = $this->actingAs($this->user)->put("/api/company/{$company->id}/update",[
-            'municipality_id'=>Municipality::factory()->create()->id,
-            'company_name'=>"Test web",
-            'tole'=>"Pokhara",
+        $company = Company::factory()->create();
+        $response = $this->actingAs($this->user)->put("/api/company/{$company->id}/update", [
+            'municipality_id' => Municipality::factory()->create()->id,
+            'company_name' => "Test web",
+            'tole' => "Pokhara",
         ]);
 
         $response->assertStatus(200);
