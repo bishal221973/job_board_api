@@ -14,6 +14,20 @@ class AuthTest extends TestCase
      * A basic feature test example.
      */
     use RefreshDatabase;
+    private $user;
+
+    private $role;
+    public function setUp(): void
+
+    {
+
+        parent::setUp();
+        $this->user = User::factory()->create();
+        $this->role = Role::firstOrCreate(['name' => 'employer']);
+
+        $this->user->assignRole($this->role);
+    }
+    use RefreshDatabase;
     public function test_user_login_with_email_and_password(): void
     {
         $user = User::factory()->create();
@@ -45,6 +59,13 @@ class AuthTest extends TestCase
             'password'=>'password',
             'password_confirmation'=>'password',
         ]);
+
+        $response->assertStatus(200);
+    }
+
+    public function test_user_logout(): void
+    {
+        $response = $this->actingAs($this->user)->get('/api/logout');
 
         $response->assertStatus(200);
     }

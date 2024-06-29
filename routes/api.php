@@ -96,4 +96,6 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('/{jobId}/submit',[ApplicationController::class,'store']);
         });
     });
+
+    Route::get('logout',[AuthController::class,'logout']);
 });

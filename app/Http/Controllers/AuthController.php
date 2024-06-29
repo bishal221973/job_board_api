@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegistrationRequest;
-use App\Models\User;
 use Validator;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\RegistrationRequest;
 
 class AuthController extends Controller
 {
@@ -61,6 +62,18 @@ class AuthController extends Controller
         return response([
             'success' => false,
             'message' => 'Please enter valide email or password'
+        ]);
+    }
+
+    public function logout()
+    {
+        Auth::user()->tokens->each(function($token, $key) {
+            $token->delete();
+        });
+
+        return response()->json([
+            'success'=> true,
+            'message'=> 'User loged out'
         ]);
     }
 }
