@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Province;
+use App\Models\District;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\District>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Municipality>
  */
-class DistrictFactory extends Factory
+class MunicipalityFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +18,8 @@ class DistrictFactory extends Factory
     public function definition(): array
     {
         return [
-            'province_id'=>Province::factory()->create()->id,
-            'name'=>$this->faker->name,
+            'district_id'=>District::factory()->create()->id,
+            'name'=> $this->faker->name,
         ];
     }
 }
