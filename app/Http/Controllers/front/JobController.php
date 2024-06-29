@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\front;
 
-use App\Http\Controllers\Controller;
 use App\Models\Job;
+use App\Models\Vacancy;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class JobController extends Controller
 {
     public function filter(Request $request){
-        $jobs=Job::with(['company.municipality.district.province.country'])
+        $vacancies=Vacancy::with(['company.municipality.district.province.country'])
         ->when($request->filled('country_id'), function ($query) {
             $query->whereHas('company',function($comapny){
                 $comapny->whereHas('municipality', function ($municipality) {
@@ -57,23 +58,23 @@ class JobController extends Controller
             });
         })
         ->when($request->filled('tole'), function ($query) {
-            $query->where('tole', request('tole'));
+            $query->where('tole', 'like','%'.request('tole') .'%');
         })
         ->when($request->filled('job_title'), function ($query) {
-            $query->where('job_title', request('job_title'));
+            $query->where('job_title', 'like','%'. request('job_title') .'%');
         })
         ->paginate($request->per_page ?? 10);
 
         return response()->json([
             'success'=>true,
-            'jobs'=>$jobs
+            'vacancies'=>$vacancies
         ]);
     }
 
     public function detail($id){
-        $job = Job::with(['company.municipality.district.province.country'])->find($id);
+        $vacancies = Vacancy::with(['company.municipality.district.province.country'])->find($id);
 
-        if (!$job) {
+        if (!$vacancies) {
             return response()->json([
                 'success' => false,
                 'message' => 'Job not found'
@@ -82,7 +83,7 @@ class JobController extends Controller
 
         return response()->json([
             'success'=> true,
-            'jobs'=>$job
+            'vacancies'=>$vacancies
         ]);
     }
 }

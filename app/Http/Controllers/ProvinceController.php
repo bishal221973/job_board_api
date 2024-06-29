@@ -40,7 +40,7 @@ class ProvinceController extends Controller
        $data=$request->validated();
         if(!$province){
             return response()->json([
-                'success'=>true,
+                'success'=>false,
                 'message'=>'province not found'
             ]);
         }

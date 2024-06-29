@@ -10,40 +10,49 @@ use App\Models\Company;
 class CompanyController extends Controller
 {
 
-    public function index(){
-        $company = Company::with(['municipality.district.province.country'])->where('user_id',Auth::user()->id)->first();
+    public function index()
+    {
+        $company = Company::with(['municipality.district.province.country'])->where('user_id', Auth::user()->id)->first();
 
         return response()->json([
-            'success'=> true,
-            'company'=>$company
+            'success' => true,
+            'company' => $company
         ]);
     }
-    public function store(CompanyRequest $request){
-        $data=$request->validated();
-        $data['user_id']=Auth::user()->id;
-
+    public function store(CompanyRequest $request)
+    {
+        $data = $request->validated();
+        $data['user_id'] = Auth::id();
+        $company = Company::where('user_id', Auth::id())->first();
+        if ($company) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Already have a company'
+            ]);
+        }
         Company::create($data);
 
         return response()->json([
-            'success'=>true,
-            'message'=>'New company have been created'
+            'success' => true,
+            'message' => 'New company have been created'
         ]);
     }
 
-    public function update(CompanyRequest $request, $id){
-        $company=Company::find($id);
+    public function update(CompanyRequest $request, $id)
+    {
+        $company = Company::find($id);
 
-        if(!$company){
+        if (!$company) {
             return response()->json([
-                'success'=>false,
-                'message'=> 'Company not found'
+                'success' => false,
+                'message' => 'Company not found'
             ]);
         }
         $company->update($request->validated());
 
         return response()->json([
-            'success'=>true,
-            'message'=> 'Selected company successfully update'
+            'success' => true,
+            'message' => 'Selected company successfully update'
         ]);
     }
 }

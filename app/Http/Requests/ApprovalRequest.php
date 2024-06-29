@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ApprovalRequest extends FormRequest
 {
@@ -24,5 +26,13 @@ class ApprovalRequest extends FormRequest
         return [
             'isApproved'=>'required'
         ];
+    }
+
+    public function failedValidation(Validator $validator){
+        throw new HttpResponseException(response()->json([
+            'success'=>false,
+            'message'=> 'validation errors',
+            'errors'=>$validator->errors()
+        ]));
     }
 }

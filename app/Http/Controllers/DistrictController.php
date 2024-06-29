@@ -38,7 +38,7 @@ class DistrictController extends Controller
         $data=$request->validated();
          if(!$district){
              return response()->json([
-                 'success'=>true,
+                 'success'=>false,
                  'message'=>'district not found'
              ]);
          }

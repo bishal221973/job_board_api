@@ -1,5 +1,6 @@
 <?php
 
+use App\Jobs\SendRegisteredMail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+Route::get('send-mail',function(){
+    $userMail='bishalcodeslaravel@gmail.com';
+    dispatch(new SendRegisteredMail($userMail));
 });

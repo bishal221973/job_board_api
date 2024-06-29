@@ -38,7 +38,7 @@ class CountryController extends Controller
         $data=$request->validated();
          if(!$country){
              return response()->json([
-                 'success'=>true,
+                 'success'=>false,
                  'message'=>'country not found'
              ]);
          }

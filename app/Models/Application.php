@@ -11,7 +11,11 @@ class Application extends Model
 
     protected $guarded=['id'];
 
-    public function job(){
-        return $this->belongsTo(Job::class);
+    public function vacancy(){
+        return $this->belongsTo(Vacancy::class,'vacancy_id','id');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

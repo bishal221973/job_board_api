@@ -39,7 +39,7 @@ class MunicipalityController extends Controller
        $data=$request->validated();
         if(!$municipality){
             return response()->json([
-                'success'=>true,
+                'success'=>false,
                 'message'=>'municipality not found'
             ]);
         }

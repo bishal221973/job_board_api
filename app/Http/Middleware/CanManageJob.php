@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Models\Job;
+use App\Models\Vacancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,9 +20,9 @@ class CanManageJob
     {
         // return $next($request);
 
-        $job = Job::find($request->id);
+        $vacancy = Vacancy::find($request->id);
 
-        if ($job && $job->user_id == Auth::id()) {
+        if ($vacancy && $vacancy->user_id == Auth::id()) {
             return $next($request);
         }
         abort(403, 'You are not authorized to manage this job');

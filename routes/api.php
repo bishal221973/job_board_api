@@ -3,7 +3,6 @@
 use App\Http\Controllers\ApplicationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\JobController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CountryController;
@@ -11,6 +10,8 @@ use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\front\JobController as FrontJobController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\MunicipalityController;
+use App\Http\Controllers\VacancyController;
+use App\Http\Middleware\CanManageJob;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,12 +77,12 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::put('/{id}/update',[CompanyController::class,'update']);
         });
 
-        Route::prefix('job')->group(function () {
-            Route::get('/',[JobController::class,'index']); //for both (get/edit)
-            Route::post('store',[JobController::class,'store']);
-            Route::get('/{id}/edit',[JobController::class,'edit']);
-            Route::put('/{id}/update',[JobController::class,'update']);
-            Route::delete('/{id}/delete',[JobController::class,'destroy']);
+        Route::prefix('vacancy')->group(function () {
+            Route::get('/',[VacancyController::class,'index']); //for both (get/edit)
+            Route::post('store',[VacancyController::class,'store']);
+            Route::get('/{id}/edit',[VacancyController::class,'edit'])->middleware(CanManageJob::class);
+            Route::put('/{id}/update',[VacancyController::class,'update'])->middleware(CanManageJob::class);
+            Route::delete('/{id}/delete',[VacancyController::class,'destroy'])->middleware(CanManageJob::class);
         });
 
         Route::prefix('application')->group(function () {
