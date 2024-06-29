@@ -20,7 +20,6 @@ class AuthController extends Controller
         $user = User::create($data);
 
         $user->assignRole('employer');
-
         return response()->json([
             'success' => true,
             'message' => 'Your registration is completed'

@@ -33,6 +33,6 @@ class ApprovalRequest extends FormRequest
             'success'=>false,
             'message'=> 'validation errors',
             'errors'=>$validator->errors()
-        ]));
+        ],422));
     }
 }

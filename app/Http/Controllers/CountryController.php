@@ -40,7 +40,7 @@ class CountryController extends Controller
              return response()->json([
                  'success'=>false,
                  'message'=>'country not found'
-             ]);
+             ],402);
          }
          $country->update($data);
          return response()->json([
@@ -55,7 +55,7 @@ class CountryController extends Controller
             return response()->json([
                 'success'=>false,
                 'message'=>'Country not found'
-            ]);
+            ],402);
         }
         $country->delete();
         return response()->json([

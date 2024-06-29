@@ -42,7 +42,7 @@ class ProvinceController extends Controller
             return response()->json([
                 'success'=>false,
                 'message'=>'province not found'
-            ]);
+            ],402);
         }
         $province->update($data);
         return response()->json([
@@ -57,7 +57,7 @@ class ProvinceController extends Controller
             return response()->json([
                 'success'=>false,
                 'message'=>'Province not found'
-            ]);
+            ],402);
         }
         $province->delete();
         return response()->json([
