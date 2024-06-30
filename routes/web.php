@@ -1,8 +1,9 @@
 <?php
 
+use App\Mail\RegisterMail;
 use App\Jobs\SendRegisteredMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,5 +22,10 @@ Route::get('/', function () {
 
 Route::get('send-mail',function(){
     $userMail='bishalcodeslaravel@gmail.com';
-    dispatch(new SendRegisteredMail($userMail));
+    // dispatch(new SendRegisteredMail($userMail));
+    $application=[
+        'id'=>'1',
+        'name'=>'Bishal',
+    ];
+    Mail::to($userMail)->send(new RegisterMail($application));
 });

@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RegisterMail;
+use App\Models\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\ApplicationRequest;
+
 use App\Http\Requests\ApprovalRequest;
-use App\Models\Application;
-use App\Jobs\SendRegisteredMail;
+use App\Http\Requests\ApplicationRequest;
+use App\Jobs\ApplicationApproval;
+use App\Jobs\ApplicationSubmited;
+
 class ApplicationController extends Controller
 {
     public function store(ApplicationRequest $request,$jobId){
@@ -19,8 +23,11 @@ class ApplicationController extends Controller
         if($request->file("resume")){
             $data["resume"]=$request->file("resume")->store("resume");
         }
-        $application=Application::create($data);
-        dispatch(new SendRegisteredMail($application));
+       $application=Application::create($data);
+
+      $application=$application->load('vacancy.company','user');
+
+        dispatch(new ApplicationSubmited($application));
         return response()->json([
             'success'=>true,
             'message'=> 'Successfully submit your application'
@@ -46,11 +53,12 @@ class ApplicationController extends Controller
             ]);
         }
 
-        $application->update([
+       $application->update([
             'isApproved'=>$request->isApproved,
             'status'=>false,
         ]);
-        dispatch(new SendRegisteredMail($application))->delay(now()->addMinutes(1));
+        $application=$application->load('vacancy.company','user');
+        dispatch(new ApplicationApproval($application))->delay(now()->addMinutes(10));
         if($request->isApproved){
             $msg="Application approved";
         }else{

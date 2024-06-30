@@ -9,17 +9,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class RegisteredMailInfo extends Mailable
+class ApplicationAccepted extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    protected $application;
+
+     public $application;
     public function __construct($application)
     {
-        $this->application=$application;
+        $this->application = $application;
     }
 
     /**
@@ -28,31 +29,19 @@ class RegisteredMailInfo extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Application submited',
+            subject: 'Application Approval',
         );
     }
 
     /**
      * Get the message content definition.
      */
-    // public function content(): Content
-    // {
-    //     return new Content(
-
-    //         view: 'email.registeredMailInfo',
-    //     );
-    // }
-    public function build()
-
-{
-
-    return $this->view('email.registeredMailInfo', [
-
-        'application' => $this->application,
-
-    ]);
-
-}
+    public function content(): Content
+    {
+        return new Content(
+            view: 'applicationAccepted',
+        );
+    }
 
     /**
      * Get the attachments for the message.
