@@ -19,9 +19,9 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        $this->call(UserSeeder::class);
-        $admin = Role::firstOrCreate(['name' => 'employer']);
-        $admin = Role::firstOrCreate(['name' => 'seeker']);
         $this->call(AddressSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(VacancySeeder::class);
+
     }
 }

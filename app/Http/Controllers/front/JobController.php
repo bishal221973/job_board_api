@@ -52,9 +52,9 @@ class JobController extends Controller
                 });
             });
         })
-        ->when($request->filled('company_id'), function ($query) {
+        ->when($request->filled('company_name'), function ($query) {
             $query->whereHas('company',function($comapny){
-                $comapny->where('id', request('company_id'));
+                $comapny->where('company_name','like','%'. request('company_name') .'%');
             });
         })
         ->when($request->filled('tole'), function ($query) {

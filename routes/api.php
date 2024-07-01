@@ -33,7 +33,7 @@ Route::post('user-registration',[AuthController::class,'seekerRegistration']);
 Route::post('login',[AuthController::class,'login']);
 
 Route::get('filter-job',[FrontJobController::class,'filter']);
-Route::get('job/{id}/detail',[FrontJobController::class,'detail']);
+Route::get('vacancy/{id}/detail',[FrontJobController::class,'detail']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::group(['middleware' => ['role:super-admin']], function () {
@@ -78,7 +78,7 @@ Route::middleware('auth:sanctum')->group(function () {
         });
 
         Route::prefix('vacancy')->group(function () {
-            Route::get('/',[VacancyController::class,'index']); //for both (get/edit)
+            Route::get('/',[VacancyController::class,'index']);
             Route::post('store',[VacancyController::class,'store']);
             Route::get('/{id}/edit',[VacancyController::class,'edit'])->middleware(CanManageJob::class);
             Route::put('/{id}/update',[VacancyController::class,'update'])->middleware(CanManageJob::class);
